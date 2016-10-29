@@ -1,3 +1,12 @@
+#include <stdio.h>
+#include <stdlib.>
+#include <string.h>
+#include <time.h>
+#include <conio.h>
+
+
+
+
 #define TAM_NOME 50
 #define TAM_LOGIN 15
 #define TAM_SENHA 15
@@ -36,10 +45,46 @@ typedef playlist {
 	int musicas[QTD_MUSICAS]; // vetor contendo os códigos das músicas
 } TPlaylist;
 
+// [1] - Cadastrar Usuarios -- BEGIN --
+
+void cadastrarUsuario(char *arquivo) {
+        struct Usuario user;
+        int i;
+        FILE *arq;
+
+        if(!(arq = fopen(arquivo, "ab"))) {
+            printf("Erro ao abrir o arquivo");
+            return;
+        } else {
+            printf("Digite seu nome: \n");
+            fgets(user.nome, sizeof(user.nome), stdin);
+
+            printf("Digite o login: \n");
+            fgets(user.login, sizeof(user.login), stdin);
+
+            printf("seu codigo de acesso sera gerado..");
+
+            //funcao gerador codigo acesso
+
+            if (fwrite(&user, sizeof(struct Usuario),1, arq)!= 1) {
+                printf("Error ao gravar arquivo..");
+            }
+
+            if (fclose(arq)) {
+                printf("Erro ao fechar arquivo..");
+            }
+
+        }
+    }
 
 
-//buscar usuario pelo nome
-int buscarNome(char *ARQUIVO, char nome[]) {
+
+
+
+// [1] - Buscar dados do USUARIO. --BEGIN--
+ 
+//buscar usuario pelo NOME
+int buscarNome(char *arquivo, char nome[]) {
     struct Usuario user;
     int i = 0;
         FILE *arq;
@@ -65,8 +110,8 @@ int buscarNome(char *ARQUIVO, char nome[]) {
 }
 
 
-//buscar pelo codigo 
-int buscarCodigo(char *ARQUIVO, int codigo) {
+//buscar pelo CODIGO 
+int buscarCodigoUser(char *arquivo, int codigo) {
     struct Usuario user;
     int i = 0;
 
@@ -91,9 +136,9 @@ int buscarCodigo(char *ARQUIVO, int codigo) {
     return -1;
 }
 
-//buscar senha
+//buscar SENHA
 
-int buscarSenha(char *ARQUIVO, char senha[]) {
+int buscarSenhaUser(char *arquivo, char senha[]) {
     struct Usuario user;
     int i = 0;
 
@@ -119,9 +164,9 @@ int buscarSenha(char *ARQUIVO, char senha[]) {
     }
 }
 
-//retorna o codigo do login
+//retorna o codigo do LOGIN
 
-int buscarLogin(char *ARQUIVO, char login[]) {
+int buscarLoginUser(char *arquivo, char login[]) {
     struct Usuario user;
 
     FILE *arq;
@@ -142,27 +187,44 @@ int buscarLogin(char *ARQUIVO, char login[]) {
     fclose(arq);
 }
 
+// [1] - Buscar dados do USUARIO. --END--
+
+
+// [2] - Alterar dados do USUARIO. --BEGIN--
+
+
+
+
 
 
 
 int main () {
 
 char nome[50], login[15], senha[15];
-int op, remover, codigo;
-
+int op, remover, codigo, i;
 
 printf("Digite seu login: \n");
+fflush(stdin);
 fgets(login, sizeof(login), stdin);
 printf("Digite sua senha: \n");
-fgets(senha, sizeof(senha), stdin);
-
-do {
-    
+for (i = 0 ; i < 15 ; ++i) {
+    fgets(senha, sizeof(senha), stdin);
+    senha[i] = getch();
+    putchar("*");
 }
 
 
 
 
+
+
+
+
+do {
+
+
+    
+} while (op != 0);
 
     return 0;
 }
